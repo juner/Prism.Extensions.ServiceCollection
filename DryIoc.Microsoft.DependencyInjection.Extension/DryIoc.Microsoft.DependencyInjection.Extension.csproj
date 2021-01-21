@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<UseWPF>true</UseWPF>
 		<LangVersion>latest</LangVersion>
 		<PackageId>DryIoc.Microsoft.DependencyInjection.Extension</PackageId>
 		<PackageVersion>1.0.0</PackageVersion>
@@ -9,12 +8,25 @@
 		<Description>DryIoc Container with no change settings and register IServiceCollection</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>First release</PackageReleaseNotes>
-		<Copyright>Copyright © 2021 juner</Copyright>
+		<Copyright>Copyright © 2021 junersProject</Copyright>
 		<PackageTags>DryIoc;Dependency;Prism;Injection</PackageTags>
 		<PackageProjectUrl>https://github.com/juner/Prism.Extensions.ServiceCollection</PackageProjectUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Company>junersProject</Company>
+		<NeutralLanguage />
+		<RepositoryUrl>https://github.com/juner/Prism.Extensions.ServiceCollection.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
 	</ItemGroup>
 </Project>
