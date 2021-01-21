@@ -2,11 +2,13 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>DryIoc.Microsoft.DependencyInjection.Extension</PackageId>
-		<PackageVersion>1.0.0</PackageVersion>
 		<Authors>juner</Authors>
 		<Description>DryIoc Container with no change settings and register IServiceCollection</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<PackageReleaseNotes>
+			1.0.0.1 OptionsBuilder support.
+			1.0.0   First release.
+		</PackageReleaseNotes>
 		<Copyright>Copyright © 2021 junersProject</Copyright>
 		<PackageTags>DryIoc;Dependency;Prism;Injection</PackageTags>
 		<PackageProjectUrl>https://github.com/juner/Prism.Extensions.ServiceCollection</PackageProjectUrl>
