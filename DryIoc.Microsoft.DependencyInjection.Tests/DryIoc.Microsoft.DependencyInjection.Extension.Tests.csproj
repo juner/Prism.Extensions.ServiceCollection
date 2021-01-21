@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0-windows</TargetFramework>
-
+		<TargetFramework>net5.0</TargetFramework>
+		<RootNamespace>DryIoc.Microsoft.DependencyInjection.Extension.Tests</RootNamespace>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -11,7 +11,6 @@
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
 		<PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
 		<PackageReference Include="coverlet.collector" Version="1.2.0" />
-		<PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
 	</ItemGroup>
 
 	<ItemGroup>

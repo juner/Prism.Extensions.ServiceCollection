@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DryIoc.Microsoft.DependencyInjection.Extension", "DryIoc.Microsoft.DependencyInjection.Extension\DryIoc.Microsoft.DependencyInjection.Extension.csproj", "{180083B0-E142-4214-94AF-E37D67E37A16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DryIoc.Microsoft.DependencyInjection.Extension.Tests", "DryIoc.Microsoft.DependencyInjection.Extension.Tests\DryIoc.Microsoft.DependencyInjection.Extension.Tests.csproj", "{727A075B-33B7-4082-937A-F3C42DBF5DD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DryIoc.Microsoft.DependencyInjection.Extension.Tests", "DryIoc.Microsoft.DependencyInjection.Tests\DryIoc.Microsoft.DependencyInjection.Extension.Tests.csproj", "{727A075B-33B7-4082-937A-F3C42DBF5DD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB80EE5C-4BDD-42E9-AB54-47989399DA0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DryIoc.Microsoft.DependencyInjection.Extension.Prism.DryIoc.Tests", "Prism.DryIoc.Tests\DryIoc.Microsoft.DependencyInjection.Extension.Prism.DryIoc.Tests.csproj", "{C18CF685-3BA2-44C4-8CFA-8ABB9455FADE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,10 @@ Global
 		{727A075B-33B7-4082-937A-F3C42DBF5DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{727A075B-33B7-4082-937A-F3C42DBF5DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{727A075B-33B7-4082-937A-F3C42DBF5DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18CF685-3BA2-44C4-8CFA-8ABB9455FADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18CF685-3BA2-44C4-8CFA-8ABB9455FADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18CF685-3BA2-44C4-8CFA-8ABB9455FADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18CF685-3BA2-44C4-8CFA-8ABB9455FADE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

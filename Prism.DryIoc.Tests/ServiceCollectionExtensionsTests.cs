@@ -5,11 +5,12 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using System.Collections.Generic;
 using System.Linq;
+using DryIoc.Microsoft.DependencyInjection.Extension;
 
-namespace DryIoc.Microsoft.DependencyInjection.Extension.Tests
+namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
 {
     [TestClass()]
-    public class ServiceCollectionExtensionsPrismTests
+    public class ServiceCollectionExtensionsTests
     {
         static Rules CreateContainerRules() => Rules.Default.WithAutoConcreteTypeResolution()
             .With(Made.Of(FactoryMethod.ConstructorWithResolvableArguments))
