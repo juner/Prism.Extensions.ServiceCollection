@@ -63,7 +63,7 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
                     ServiceLifetime.Scoped => Reuse.ScopedOrSingleton,
                     _ => Reuse.Transient
                 };
-                container.Register(descriptor.ServiceType, descriptor.ImplementationType, reuse, ifAlreadyRegistered: IfAlreadyRegistered.AppendNewImplementation);
+                container.Register(descriptor.ServiceType, descriptor.ImplementationType, reuse, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
             }
             else if (descriptor.ImplementationFactory is { })
             {
@@ -73,11 +73,11 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
                     ServiceLifetime.Scoped => Reuse.ScopedOrSingleton,
                     _ => Reuse.Transient
                 };
-                container.RegisterDelegate(true, descriptor.ServiceType, descriptor.ImplementationFactory, reuse, ifAlreadyRegistered: IfAlreadyRegistered.AppendNewImplementation);
+                container.RegisterDelegate(true, descriptor.ServiceType, descriptor.ImplementationFactory, reuse, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
             }
             else
             {
-                container.RegisterInstance(true, descriptor.ServiceType, descriptor.ImplementationInstance, ifAlreadyRegistered: IfAlreadyRegistered.AppendNewImplementation);
+                container.RegisterInstance(true, descriptor.ServiceType, descriptor.ImplementationInstance, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
             }
         }
         static void RegisterDescriptor(IContainer container, ServiceDescriptor descriptor)

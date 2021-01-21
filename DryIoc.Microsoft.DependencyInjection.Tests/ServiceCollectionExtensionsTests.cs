@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -224,6 +225,28 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension.Tests
         {
             public T Value { get; set; } = default!;
 
+        }
+        [TestMethod()]
+        public void RegisterServices_Options_Test()
+        {
+            var Container = CreateContainer();
+            Container.RegisterServices(v =>
+            {
+                v.AddOptions<Config>()
+                    .Configure(config => config.Value1 = "test1")
+                    .Configure(config => config.Value2 = "test2")
+                    .PostConfigure(config => config.Value3 = "test3");
+            });
+            var Config = Container.Resolve<IOptions<Config>>();
+            Assert.AreEqual(Config.Value.Value1, "test1");
+            Assert.AreEqual(Config.Value.Value2, "test2");
+            Assert.AreEqual(Config.Value.Value3, "test3");
+        }
+        class Config
+        {
+            public string Value1 { get; set; } = string.Empty;
+            public string Value2 { get; set; } = string.Empty;
+            public string Value3 { get; set; } = string.Empty;
         }
     }
 }

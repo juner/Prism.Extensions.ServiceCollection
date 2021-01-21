@@ -6,6 +6,7 @@ using Prism.Ioc;
 using System.Collections.Generic;
 using System.Linq;
 using DryIoc.Microsoft.DependencyInjection.Extension;
+using Microsoft.Extensions.Options;
 
 namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
 {
@@ -241,6 +242,29 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
         class B2<T> : IB<T>
         {
             public T Value { get; set; } = default!;
+        }
+        [TestMethod()]
+        public void RegisterServices_Options_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddOptions<Config>()
+                    .Configure(config => config.Value1 = "test1")
+                    .Configure(config => config.Value2 = "test2")
+                    .PostConfigure(config => config.Value3 = "test3");
+            });
+            var Config = Container.Resolve<IOptions<Config>>();
+            Assert.AreEqual(Config.Value.Value1, "test1");
+            Assert.AreEqual(Config.Value.Value2, "test2");
+            Assert.AreEqual(Config.Value.Value3, "test3");
+        }
+        class Config
+        {
+            public string Value1 { get; set; } = string.Empty;
+            public string Value2 { get; set; } = string.Empty;
+            public string Value3 { get; set; } = string.Empty;
         }
     }
 }

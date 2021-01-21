@@ -12,6 +12,7 @@
 		<PackageReference Include="MSTest.TestFramework" />
 		<PackageReference Include="coverlet.collector" />
 		<PackageReference Include="Prism.DryIoc" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
 	</ItemGroup>
 
 	<ItemGroup>
