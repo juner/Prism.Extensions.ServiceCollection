@@ -131,5 +131,116 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
             public string Value { get; set; } = string.Empty;
 
         }
+        [TestMethod()]
+        public void RegisterServices_Transient_Generic_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddTransient(typeof(IB<>), typeof(B1<>));
+            });
+            var Values = Container.Resolve<IEnumerable<IB<string>>>().ToList();
+            Assert.AreEqual(1, Values.Count);
+            Assert.IsInstanceOfType(Values[0], typeof(B1<string>));
+
+            var Value = Container.Resolve<IB<string>>();
+            Assert.IsInstanceOfType(Value, typeof(B1<string>));
+        }
+        [TestMethod()]
+        public void RegisterServices_Transient_Generic_Many_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddTransient(typeof(IB<>), typeof(B1<>));
+                v.AddTransient(typeof(IB<>), typeof(B2<>));
+            });
+            var Values = Container.Resolve<IEnumerable<IB<string>>>().ToList();
+            Assert.AreEqual(2, Values.Count);
+            Assert.IsInstanceOfType(Values[0], typeof(B1<string>));
+            Assert.IsInstanceOfType(Values[1], typeof(B2<string>));
+            Assert.ThrowsException<ContainerResolutionException>(() => Container.Resolve<IB<string>>());
+        }
+        [TestMethod()]
+        public void RegisterServices_Singleton_Generic_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddSingleton(typeof(IB<>), typeof(B1<>));
+            });
+            var Values = Container.Resolve<IEnumerable<IB<string>>>().ToList();
+            Assert.AreEqual(1, Values.Count);
+            Assert.IsInstanceOfType(Values[0], typeof(B1<string>));
+
+            var Value = Container.Resolve<IB<string>>();
+            Assert.IsInstanceOfType(Value, typeof(B1<string>));
+        }
+        [TestMethod()]
+        public void RegisterServices_Singleton_Generic_Many_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddSingleton(typeof(IB<>), typeof(B1<>));
+                v.AddSingleton(typeof(IB<>), typeof(B2<>));
+            });
+            var Values = Container.Resolve<IEnumerable<IB<string>>>().ToList();
+            Assert.AreEqual(2, Values.Count);
+            Assert.IsInstanceOfType(Values[0], typeof(B1<string>));
+            Assert.IsInstanceOfType(Values[1], typeof(B2<string>));
+            Assert.ThrowsException<ContainerResolutionException>(() => Container.Resolve<IB<string>>());
+        }
+        [TestMethod()]
+        public void RegisterServices_Scoped_Generic_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddScoped(typeof(IB<>), typeof(B1<>));
+            });
+            using var Scope = Container.CreateScope();
+            var Values = Scope.Resolve<IEnumerable<IB<string>>>().ToList();
+            Assert.AreEqual(1, Values.Count);
+            Assert.IsInstanceOfType(Values[0], typeof(B1<string>));
+
+            var Value = Scope.Resolve<IB<string>>();
+            Assert.IsInstanceOfType(Value, typeof(B1<string>));
+        }
+        [TestMethod()]
+        public void RegisterServices_Scoped_Generic_Many_Test()
+        {
+            var Container = CreateContainerExtension();
+            IContainerRegistry Registry = Container;
+            Registry.GetContainer().RegisterServices(v =>
+            {
+                v.AddScoped(typeof(IB<>), typeof(B1<>));
+                v.AddScoped(typeof(IB<>), typeof(B2<>));
+            });
+            using var Scope = Container.CreateScope();
+            var Values = Scope.Resolve<IEnumerable<IB<string>>>().ToList();
+            Assert.AreEqual(2, Values.Count);
+            Assert.IsInstanceOfType(Values[0], typeof(B1<string>));
+            Assert.IsInstanceOfType(Values[1], typeof(B2<string>));
+
+            Assert.ThrowsException<ContainerResolutionException>(() => Container.Resolve<IB<string>>());
+        }
+        interface IB<T>
+        {
+            T Value { get; set; }
+        }
+        class B1<T> : IB<T>
+        {
+            public T Value { get; set; }
+        }
+        class B2<T> : IB<T>
+        {
+            public T Value { get; set; }
+        }
     }
 }
