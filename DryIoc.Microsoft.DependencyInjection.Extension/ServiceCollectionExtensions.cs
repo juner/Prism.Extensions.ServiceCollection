@@ -29,14 +29,14 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
             var d = descriptors.GroupBy(v => v.ServiceType).Select(v => (ServiceType: v.Key, Descriptors: v.ToList()));
             if (registerDescriptor is null)
                 foreach (var (serviceType, ds) in d)
-                    if (ds.Count == 1)
+                    if (ds.Count is 1)
                         RegisterDescriptor(container, ds.First());
                     else
                         foreach (var descriptor in ds)
                             RegisterDescriptorMany(container, descriptor);
             else
                 foreach (var (serviceType, ds) in d)
-                    if (ds.Count == 1)
+                    if (ds.Count is 1)
                     {
                         if (!registerDescriptor(container, ds.First()))
                             RegisterDescriptor(container, ds.First());
