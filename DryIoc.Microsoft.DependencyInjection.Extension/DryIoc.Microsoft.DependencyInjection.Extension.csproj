@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<LangVersion>latest</LangVersion>
 		<PackageId>DryIoc.Microsoft.DependencyInjection.Extension</PackageId>
 		<PackageVersion>1.0.0</PackageVersion>
 		<Authors>juner</Authors>
@@ -20,8 +19,8 @@
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="4.1.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
+		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\LICENSE">

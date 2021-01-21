@@ -236,11 +236,11 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
         }
         class B1<T> : IB<T>
         {
-            public T Value { get; set; }
+            public T Value { get; set; } = default!;
         }
         class B2<T> : IB<T>
         {
-            public T Value { get; set; }
+            public T Value { get; set; } = default!;
         }
     }
 }

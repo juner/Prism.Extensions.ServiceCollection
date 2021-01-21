@@ -7,15 +7,15 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
 {
     public static class ServiceCollectionExtensions
     {
-        public static IContainer RegisterServices(this IContainer container, Action<IServiceCollection> Action, Func<IRegistrator, ServiceDescriptor, bool> registerDescriptor = null)
+        public static IContainer RegisterServices(this IContainer container, Action<IServiceCollection> Action, Func<IRegistrator, ServiceDescriptor, bool>? registerDescriptor = null)
         {
             var descriptors = new ServiceCollection();
             Action.Invoke(descriptors);
             DependencyInjectionAdapter(container, descriptors, registerDescriptor);
             return container;
         }
-        static void DependencyInjectionAdapter(IContainer container, IEnumerable<ServiceDescriptor> descriptors = null,
-            Func<IRegistrator, ServiceDescriptor, bool> registerDescriptor = null)
+        static void DependencyInjectionAdapter(IContainer container, IEnumerable<ServiceDescriptor>? descriptors = null,
+            Func<IRegistrator, ServiceDescriptor, bool>? registerDescriptor = null)
         {
             container.Use<IServiceScopeFactory>(r => new DryIocServiceScopeFactory(r));
             // Registers service collection
@@ -24,7 +24,7 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
             var Provider = container.BuildServiceProvider();
             container.RegisterInstance(Provider);
         }
-        static void Populate(IContainer container, IEnumerable<ServiceDescriptor> descriptors, Func<IRegistrator, ServiceDescriptor, bool> registerDescriptor = null)
+        static void Populate(IContainer container, IEnumerable<ServiceDescriptor> descriptors, Func<IRegistrator, ServiceDescriptor, bool>? registerDescriptor = null)
         {
             var d = descriptors.GroupBy(v => v.ServiceType).Select(v => (ServiceType: v.Key, Descriptors: v.ToList()));
             if (registerDescriptor is null)
