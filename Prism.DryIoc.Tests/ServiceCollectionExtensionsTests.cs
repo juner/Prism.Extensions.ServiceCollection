@@ -5,7 +5,6 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using System.Collections.Generic;
 using System.Linq;
-using DryIoc.Microsoft.DependencyInjection.Extension;
 using Microsoft.Extensions.Options;
 
 namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
