@@ -248,5 +248,32 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension.Tests
             public string Value2 { get; set; } = string.Empty;
             public string Value3 { get; set; } = string.Empty;
         }
+        [TestMethod]
+        public void RegisterServices_ServiceScopeFactory()
+        {
+            var Container = CreateContainer();
+            Container.RegisterServices(v =>
+            {
+                v.AddScoped(typeof(IB<>), typeof(B1<>));
+            });
+            var ScopeFactory = Container.Resolve<IServiceScopeFactory>();
+            using var Scope = ScopeFactory.CreateScope();
+            var Value = Scope.ServiceProvider.GetRequiredService<IB<string>>();
+            Assert.IsInstanceOfType(Value, typeof(B1<string>));
+
+        }
+        [TestMethod]
+        public void RegisterServices_ServiceProvider()
+        {
+            var Container = CreateContainer();
+            Container.RegisterServices(v =>
+            {
+                v.AddTransient(typeof(IB<>), typeof(B1<>));
+            });
+            var Provider = Container.Resolve<System.IServiceProvider>();
+            var Value = Provider.GetRequiredService<IB<string>>();
+            Assert.IsInstanceOfType(Value, typeof(B1<string>));
+
+        }
     }
 }
