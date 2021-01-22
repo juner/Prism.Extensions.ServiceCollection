@@ -6,6 +6,7 @@
 		<Description>DryIoc Container with no change settings and register IServiceCollection</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>
+			1.0.0.2 refactoring: Improved internal processing.
 			1.0.0.1 OptionsBuilder support.
 			1.0.0   First release.
 		</PackageReleaseNotes>
