@@ -24,36 +24,28 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
             var Provider = container.BuildServiceProvider();
             container.RegisterInstance(Provider);
         }
+        /// <summary>
+        /// Populate <paramref name="container"/> with <paramref name="descriptors"/>
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="descriptors"></param>
+        /// <param name="registerDescriptor"></param>
         static void Populate(IContainer container, IEnumerable<ServiceDescriptor> descriptors, Func<IRegistrator, ServiceDescriptor, bool>? registerDescriptor = null)
         {
-            var d = descriptors.GroupBy(v => v.ServiceType).Select(v => (ServiceType: v.Key, Descriptors: v.ToList()));
             if (registerDescriptor is null)
-                foreach (var (serviceType, ds) in d)
-                    if (ds.Count is 1)
-                        RegisterDescriptor(container, ds.First());
-                    else
-                        foreach (var descriptor in ds)
-                            RegisterDescriptorMany(container, descriptor);
+                foreach (var descriptor in descriptors)
+                    RegisterDescriptor(container, descriptor);
             else
-                foreach (var (serviceType, ds) in d)
-                    if (ds.Count is 1)
-                    {
-                        if (!registerDescriptor(container, ds.First()))
-                            RegisterDescriptor(container, ds.First());
-                    }
-                    else
-                    {
-                        foreach (var descriptor in ds)
-                            if (!registerDescriptor(container, descriptor))
-                                RegisterDescriptorMany(container, descriptor);
-                    }
+                foreach (var descriptor in descriptors)
+                    if (!registerDescriptor(container, descriptor))
+                        RegisterDescriptor(container, descriptor);
         }
         /// <summary>
-        /// 
+        /// Register the <paramref name="descriptor"/> in <paramref name="container"/>.
         /// </summary>
         /// <param name="container"></param>
         /// <param name="descriptor"></param>
-        static void RegisterDescriptorMany(IContainer container, ServiceDescriptor descriptor)
+        static void RegisterDescriptor(IContainer container, ServiceDescriptor descriptor)
         {
             if (descriptor.ImplementationType is { })
             {
@@ -78,33 +70,6 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
             else
             {
                 container.RegisterInstance(true, descriptor.ServiceType, descriptor.ImplementationInstance, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
-            }
-        }
-        static void RegisterDescriptor(IContainer container, ServiceDescriptor descriptor)
-        {
-            if (descriptor.ImplementationType is { })
-            {
-                var reuse = descriptor.Lifetime switch
-                {
-                    ServiceLifetime.Singleton => Reuse.Singleton,
-                    ServiceLifetime.Scoped => Reuse.ScopedOrSingleton,
-                    _ => Reuse.Transient
-                };
-                container.Register(descriptor.ServiceType, descriptor.ImplementationType, reuse);
-            }
-            else if (descriptor.ImplementationFactory is { })
-            {
-                var reuse = descriptor.Lifetime switch
-                {
-                    ServiceLifetime.Singleton => Reuse.Singleton,
-                    ServiceLifetime.Scoped => Reuse.ScopedOrSingleton,
-                    _ => Reuse.Transient
-                };
-                container.RegisterDelegate(true, descriptor.ServiceType, descriptor.ImplementationFactory, reuse);
-            }
-            else
-            {
-                container.RegisterInstance(true, descriptor.ServiceType, descriptor.ImplementationInstance);
             }
         }
     }
