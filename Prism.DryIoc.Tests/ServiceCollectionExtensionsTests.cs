@@ -1,11 +1,11 @@
-﻿using DryIoc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DryIoc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.DryIoc;
 using Prism.Ioc;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Options;
 
 namespace DryIoc.Microsoft.DependencyInjection.Extension.Prism.Dryioc.Tests
 {
