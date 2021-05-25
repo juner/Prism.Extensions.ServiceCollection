@@ -10,4 +10,12 @@
 		<FileVersion>1.0.0.2</FileVersion>
 		<Version>1.0.0.2</Version>
 	</PropertyGroup>
+  <Target Name="PreBuildFormat" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)|$(ProjectExt)'=='Debug|.csproj'">
+    <Exec Command="dotnet tool restore" />
+    <Exec Command='dotnet tool run dotnet-format --folder "$(ProjectDir)' />
+  </Target>
+  <Target Name="PreBuildFormatCheck" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)|$(ProjectExt)'=='Release|.csproj'">
+    <Exec Command="dotnet tool restore" />
+    <Exec Command='dotnet tool run dotnet-format --folder --check "$(ProjectDir)' IgnoreExitCode="false" />
+  </Target>
 </Project>
