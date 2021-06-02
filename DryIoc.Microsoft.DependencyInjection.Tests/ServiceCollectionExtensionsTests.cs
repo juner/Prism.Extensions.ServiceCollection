@@ -275,5 +275,49 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension.Tests
             Assert.IsInstanceOfType(Value, typeof(B1<string>));
 
         }
+        class MultiConstructor
+        {
+            public readonly Config Config;
+            public readonly IEnumerable<IA> Values;
+            public readonly int CallConstructorType;
+            public MultiConstructor()
+            {
+                Config = new();
+                Values = Enumerable.Empty<IA>();
+                CallConstructorType = 1;
+            }
+            public MultiConstructor(IEnumerable<IA> Values)
+            {
+                this.Values = Values;
+                Config = new();
+                CallConstructorType = 2;
+            }
+            public MultiConstructor(IEnumerable<IA> Values, Config Config)
+            {
+                this.Values = Values;
+                this.Config = Config;
+                CallConstructorType = 3;
+            }
+            public MultiConstructor(IEnumerable<IA> Values, IOptions<Config> Config)
+            {
+                this.Values = Values;
+                this.Config = Config.Value;
+                CallConstructorType = 4;
+            }
+        }
+        [TestMethod]
+        public void RegisterServices_MultiConstruction()
+        {
+            var Container = CreateContainer();
+            Container.RegisterServices(v =>
+            {
+                v.AddOptions<Config>()
+                    .Configure(config => config.Value1 = "test1");
+                v.AddTransient<IA, A1>();
+                v.AddTransient<MultiConstructor>();
+            });
+            var Value = Container.Resolve<MultiConstructor>();
+            Assert.AreEqual(4, Value.CallConstructorType);
+        }
     }
 }

@@ -46,6 +46,7 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
         /// <param name="descriptor"></param>
         static void RegisterDescriptor(IContainer container, ServiceDescriptor descriptor)
         {
+            const IfAlreadyRegistered ifAlreadyRegistered = IfAlreadyRegistered.AppendNotKeyed;
             if (descriptor.ImplementationType is { })
             {
                 var reuse = descriptor.Lifetime switch
@@ -54,7 +55,9 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
                     ServiceLifetime.Scoped => Reuse.ScopedOrSingleton,
                     _ => Reuse.Transient
                 };
-                container.Register(descriptor.ServiceType, descriptor.ImplementationType, reuse, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
+                var made = Made.Of(FactoryMethod.ConstructorWithResolvableArguments);
+                var setup = Setup.With(trackDisposableTransient: true);
+                container.Register(descriptor.ServiceType, descriptor.ImplementationType, reuse, made: made, ifAlreadyRegistered: ifAlreadyRegistered, setup: setup);
             }
             else if (descriptor.ImplementationFactory is { })
             {
@@ -64,11 +67,11 @@ namespace DryIoc.Microsoft.DependencyInjection.Extension
                     ServiceLifetime.Scoped => Reuse.ScopedOrSingleton,
                     _ => Reuse.Transient
                 };
-                container.RegisterDelegate(true, descriptor.ServiceType, descriptor.ImplementationFactory, reuse, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
+                container.RegisterDelegate(true, descriptor.ServiceType, descriptor.ImplementationFactory, reuse, ifAlreadyRegistered: ifAlreadyRegistered);
             }
             else
             {
-                container.RegisterInstance(true, descriptor.ServiceType, descriptor.ImplementationInstance, ifAlreadyRegistered: IfAlreadyRegistered.AppendNotKeyed);
+                container.RegisterInstance(true, descriptor.ServiceType, descriptor.ImplementationInstance, ifAlreadyRegistered: ifAlreadyRegistered);
             }
         }
     }
